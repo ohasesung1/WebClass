@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+  </head>
+  <body>
+    <form method="get" action="/param_calculator">
+      <span>RequestParam 계산기</span>
+      <br>
+      <input name="num1">
+      <input name="num2">
+      <br>
+      <button name="operator" value="+">+</button>
+      <button name="operator" value="-">-</button>
+      <button name="operator" value="*">*</button>
+      <button name="operator" value="/">/</button>
+      <br>
+    </form>
+    <br>
+    <span>RequestParam 계산기</span>
+    <br>
+    <input id="num1">
+    <input id="num2">
+    <br>
+    <button id="operator" value="+" onclick="send()">+</button>
+    <button id="operator" value="-" onclick="send()">-</button>
+    <button id="operator" value="*" onclick="send()">*</button>
+    <button id="operator" value="/" onclick="send()">/</button>
+    <br>
+
+    <script>
+      function send() {
+        let num1 = $("#num1").val();
+        let num2 = $("#num2").val();
+        let operator = $("#operator").val();
+        location.href = "path_variable_calculator/" + num1 + "/" + num2 + "/" + operator;
+      }
+
+      // function setOperator(operator) {
+      //   if (operator === '+') {
+      //     name="operator"
+      //   }
+      // }
+    </script>
+  </body>
+</html>
