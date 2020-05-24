@@ -31,7 +31,7 @@ public class CommentController {
     return commentService.update(id, comment);
   }
 
-  @DeleteMapping("/comment/remove/{id}")
+  @DeleteMapping("/comment/delete/{id}")
   public boolean remove(@PathVariable Long id) {
     return commentService.remove(id);
   }
