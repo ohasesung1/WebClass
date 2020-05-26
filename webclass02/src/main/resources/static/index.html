@@ -1,0 +1,173 @@
+<html>
+  <header>
+    <link rel="stylesheet" href="index.css"/>
+    <meta charset="utf-8">
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+  </header>
+  <body>
+    <div class="register">
+      <h1>회원가입</h1>
+      <div>
+        <span>username</span>
+        <input id="join-username"/>
+      </div>
+      <div>
+        <span>useremil</span>
+        <input id="join-email"/>
+      </div>
+      <div>
+        <span>userpassword</span>
+        <input id="join-password"/>
+      </div>
+      <div>
+        <button onclick="joinUser()">확인</button>
+        <button>취소</button>
+      </div>
+    </div>
+    <div>
+      <h1>댓글</h1>
+      <div>
+        <span>content</span>
+        <input id="add-comment"/>
+        <button onclick="addComment()">확인</button>
+      </div>
+    </div>
+    <div class="memberListTemplate">
+      <h1>회원 목록</h1>
+      <div class="memberList">
+        <div>
+          <span>aaa</span>
+        </div>
+        <div>
+          <span>aaa@dgsw.hs.kr</span>
+        </div>
+        <div>
+          <span>1234</span>
+        </div>
+        <div>
+          <span>person.png</span>
+        </div>
+        <div>
+          <span>경로</span>
+        </div>
+        <div>
+          <div>
+            <button>수정</button>
+            <button>삭제</button>
+          </div>
+          <div>
+            <button>이미지</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h1>댓글 목록</h1>
+      <div>
+        <div class="commentListItem">
+          <div>
+            <span>aaa</span>
+          </div>
+          <div>
+            <span>hi there 1</span>
+          </div>
+          <div>
+            <button>수정</button>
+          </div>
+          <div>
+            <button>삭제</button>
+          </div>
+        </div>
+        <div class="commentListItem">
+          <div>
+            <span>aaa</span>
+          </div>
+          <div>
+            <span>hi there 1</span>
+          </div>
+          <div>
+            <button>수정</button>
+          </div>
+          <div>
+            <button>삭제</button>
+          </div>
+        </div>
+        <div class="commentListItem">
+          <div>
+            <span>aaa</span>
+          </div>
+          <div>
+            <span>hi there 1</span>
+          </div>
+          <div>
+            <button>수정</button>
+          </div>
+          <div>
+            <button>삭제</button>
+          </div>
+        </div>  
+        <div>
+          <button>로그인</button>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    async function joinUser() {
+      try {
+        let user = {
+          username: $('#join-username').val(),
+          email: $('#join-email').val(),
+          password: $('#join-password').val(),
+        };
+
+        let response = await $.ajax({
+          type: 'post',
+          url: '/user/add',
+          contentType: 'application/json',
+          data: JSON.stringify(user),
+          success: () => {
+            alert('가입이 완료 되었습니다.');
+          },
+        });
+        $('#join-username').val('');
+        $('#join-email').val('');
+        $('#join-password').val('');
+        addUserLine(resoonse);
+      } catch (error) {
+        console.log(error);
+        
+        console.log(JSON.stringify(error));
+      }
+    }
+
+    async function addComment() {
+      try {
+        let comment = {
+          content: $('#add-comment').val(),
+          userId: 1,
+        };
+
+        let response = await $.ajax({
+          type: 'post',
+          url: '/comment/add',
+          contentType: 'application/json',
+          data: JSON.stringify(comment),
+          success: () => {
+            alert('댓글 작성 완료 되었습니다.');
+          },
+        });
+        addCommentLine(response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    async function editUser(button, id) {
+      
+    }
+
+    async function name(params) {
+      
+    }
+  </script>
+</html>

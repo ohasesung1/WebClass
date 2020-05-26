@@ -13,8 +13,9 @@ POST http://localhost:8080/user/add
 Content-Type: application/json
 
 {
-  "username": "bbb",
-  "email": "bbb@dgsw"
+  "username": "asdf",
+  "email": "bbb@adsf",
+  "password" : "122adsf334"
 }
 
 ###

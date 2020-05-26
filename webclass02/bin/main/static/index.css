@@ -1,0 +1,32 @@
+.register {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 200px;
+  border-bottom: 1px solid #ced4da;
+}
+
+.memberList {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  
+}
+
+.memberListTemplate {
+  width: 100%;
+  height: 200px;
+  border-bottom: 1px solid #ced4da;
+}
+
+.commentListItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  border: 1px solid #ced4da;
+}
