@@ -21,6 +21,11 @@
   border-bottom: 1px solid #ced4da;
 }
 
+.fileInput {
+  width: 0px;
+  height: 0px;
+}
+
 .commentListItem {
   display: flex;
   flex-direction: row;
