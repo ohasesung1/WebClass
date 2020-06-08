@@ -7,11 +7,11 @@ import javax.persistence.Id;
 
 import lombok.Data;
 
-@Entity
-@Data
+@Entity 
+@Data // 람북 getter, setter 설정
 public class Attachment {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Id // 고유 id 설정 primary key
+  @GeneratedValue(strategy = GenerationType.IDENTITY) // id 자동 증가
   private Long id;
   private String storedPath;
   private Long postId;

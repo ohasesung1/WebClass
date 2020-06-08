@@ -1,7 +1,7 @@
 package kr.hs.dgsw.blog.Protocol;
 
 public enum ResponseType {
-  FAIL(0, "명령을 실행하지 못하였습니다."),
+  FAIL(0, "명령을 실행하지 못하였습니다."), // 리스폰스 타입 설정
 
   USER_DELETE   (101, "ID [%d]의 사용자를 삭제하였습니다."),
   USER_ADD   (102, "ID [%d]의 사용자를 추가하였습니다."),
@@ -21,11 +21,11 @@ public enum ResponseType {
   final private int code;
   final private String desc;
 
-  ResponseType(int code, String desc) {
+  ResponseType(int code, String desc) { // setter
     this.code = code;
     this.desc = desc;
   }
 
-  public int code() { return this.code; }
-  public String desc() { return this.desc; }
+  public int code() { return this.code; } // getter
+  public String desc() { return this.desc; } // getter
 }

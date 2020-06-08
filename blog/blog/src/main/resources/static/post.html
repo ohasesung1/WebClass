@@ -1,8 +1,139 @@
 <html>
   <head>
-
+    <link rel="stylesheet" href="post.css"/>
+    <meta charset="utf-8">
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
   </head>
   <body>
-    <p>test</p>
+    <div class="postTemplate">
+      <h2>게시글 작성</h2>
+      <div>
+        <span>게시글 제목</span>
+        <input id="post-title"/>
+      </div>
+      <div>
+        <span>게시글 내용</span>
+        <textarea id="post-content"></textarea>
+      </div>
+      <div>
+        <button onclick="writePost()">작성</button>
+      </div>
+    </div>
+    <div class="postTemplate" id="postList">
+      <h2>게시글 전체 목록 조회</h2>
+    </div>
+
+    <div class="postOneTemplate">
+      <h2>게시글 조회</h2>
+      <div>
+        <span>제목:</span>
+        <span id="title"></span>
+      </div>
+      <div>
+        <span>내용:</span>
+        <span id="content"></span>
+      </div>
+    </div>
+
+    <div class="postTemplate">
+      <div>
+        <span>제목</span>
+        <input id="post-title-update"/>
+      </div>
+      <div>
+        <span>내용</span>
+        <textarea id="post-content-update"></textarea>
+      </div>
+      <div>
+        <button onclick="updatePost()">수정</button>
+      </div>
+    </div>
   </body>
+
+  <script>
+    let updatePostIdx = 0;
+    async function writePost() {
+        let data = {
+          title: $('#post-title').val(),
+          content: $('#post-content').val(),
+          userId: "1",
+          pictures: null
+        };
+
+        try {
+          let response = await $.ajax({
+            type: 'post',
+            url: '/post/create',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: () => {
+              alert('작성 성공');
+            }
+          });
+        } catch (error) {
+          console.log(error);
+        }
+
+        $('#post-title').val('');
+        $('#post-content').val('');
+    };
+
+    async function getPostList() {
+      let response = await $.ajax("/post/read");
+      console.log(response);
+      
+      response.data.forEach(element => {
+        $('#postList').append(`
+          <div class="postItem" onclick="getPost(${element.id})">
+            <div class="postItemTitle">
+              ${element.title}
+            </div>
+            <div class="postItemContent">
+              ${element.content}
+            </div>
+          </div>
+        `);
+      });
+    };
+
+    async function updatePost() {
+
+      let data = {
+        title: $('#post-title-update').val(),
+        content: $('#post-content-update').val(),
+        pictures: null
+      };
+
+      let response = await $.ajax({
+        type: 'put',
+        url: `/post/update/${updatePostIdx}`,
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: () => {
+          alert('수정 성공');
+        }
+      });
+    };
+
+    async function getPost(postIdx) {
+      console.log(postIdx);
+      
+      let response = await $.ajax({
+        type: 'get',
+        url: `/post/read/${postIdx}`,
+        contentType: 'application/json',
+      });
+
+      let data = {
+        ...response.data
+      };
+
+      document.getElementById('title').innerHTML = data.title;
+      document.getElementById('content').innerHTML = data.content;
+
+      updatePostIdx = postIdx;
+    }
+
+    getPostList();
+  </script>
 </html>

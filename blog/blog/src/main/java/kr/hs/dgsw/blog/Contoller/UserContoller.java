@@ -14,9 +14,9 @@ import kr.hs.dgsw.blog.Protocol.ResponseFormat;
 import kr.hs.dgsw.blog.Protocol.ResponseType;
 import kr.hs.dgsw.blog.Service.UserService;
 
-@RestController
+@RestController //@RestController 는 @Controller 어노테이션과 @ResponseBody 어노테이션을 합쳐놓은 어노테이션이다.
 public class UserContoller {
-  @Autowired
+  @Autowired //@Autowired란 생성자나 세터 등을 사용하여 의존성 주입을 하려고 할 때, 해당 빈을 찾아서 주입해주는 annotation이다
   private UserService userService;
 
   @PostMapping("/user/create")

@@ -5,28 +5,223 @@
     <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
   </head>
   <body>
-    <div class="registerUserTemplate">
+    <div class="userTemplate">
       <div>
         <h2>회원가입</h2>
       </div>
       <div class="userInfoDiv">
         <span>ID:</span>
-        <input/>
+        <div class="userInfoInput">
+          <input id="user-id"/>
+        </div>
       </div>
       <div class="userInfoDiv">
         <span>PW:</span>
-        <input/>
+        <div class="userInfoInput">
+          <input id="user-pw"/>
+        </div>
       </div>
       <div class="userInfoDiv">
         <span>NAME:</span>
-        <input/>
+        <div class="userInfoInput">
+          <input id="user-name"/>
+        </div>
       </div>
       <div class="userInfoDiv">
-        <span>NAME:</span>
-        <input/>
+        <span>EMAIL:</span>
+        <div class="userInfoInput">
+          <input id="user-email"/>
+        </div>
+      </div>
+      <div class="userInfoDiv">
+        <span>PHONE:</span>
+        <div class="userInfoInput">
+          <input id="user-phone"/>
+        </div>
+      </div>
+      <div class="userInfoDiv">
+        <span>Picture:</span>
+        <div class="userInfoInput">
+          <input id="user-picture"/>xlx
+        </div>
+      </div>
+      <div>
+        <button onclick="registerUser()">회원가입</button>
       </div>
     </div>
+    <div class="userTemplate" id="userList">
+      <h2>
+        회원 전체 목록
+      </h2>
+    </div>
+    <div class="userInfoOneDiv">
+      <h2>회원 정보</h2>
+      <div class="userDataDiv">
+        <div>
+          <span>회원 ID:</span>
+          <span id="userId"></span>
+        </div>
+        <div>
+          <span>회원 NAME:</span>
+          <span id="userName"></span>
+        </div>
+        <div>
+          <span>회원 Email:</span>
+          <span id="userEmail"></span>
+        </div>
+        <div>
+          <span>회원 Phone:</span>
+          <span id="userPhone"></span>
+        </div>
+        <div>
+          <span>회원 가입일:</span>
+          <span id="userCreated"></span>
+        </div>
+        <div>
+          <span>회원 정보 수정일:</span>
+          <span id="userModified"></span>
+        </div>
+      </div>
+      <div class="userModifyDiv">
+        <div class="userInfoDiv">
+          <span>NAME:</span>
+          <div class="userInfoInput">
+            <input id="user-name-modify"/>
+          </div>
+        </div>
+        <div class="userInfoDiv">
+          <span>EMAIL:</span>
+          <div class="userInfoInput">
+            <input id="user-email-modify"/>
+          </div>
+        </div>
+        <div class="userInfoDiv">
+          <span>PHONE:</span>
+          <div class="userInfoInput">
+            <input id="user-phone-modify"/>
+          </div>
+        </div>
 
+        <div>
+          <button onclick="modifyUser()">정보 수정</button>
+        </div>
+      </div>
+    </div>
   </body>
-  <script></script>
+  <script>
+    let modifyUserId = 0;
+
+    async function registerUser() {
+      try {
+        let user = {
+          name: $('#user-name').val(),
+          email: $('#user-email').val(),
+          password: $('#user-pw').val(),
+          phone: $('#user-phone').val(),
+          account: $('#user-id').val(),
+          profilePath: 'test',
+        };
+
+        let response = await $.ajax({
+          type: 'post',
+          url: '/user/create',
+          contentType: 'application/json',
+          data: JSON.stringify(user),
+          success: () => {
+            alert('가입 성공');
+          },
+        });
+        $('#user-name').val('');
+        $('#user-email').val('');
+        $('#user-pw').val('');
+        $('#user-phone').val('');
+        $('#user-id').val('');
+      } catch(error) {
+        console.log(error);
+      }
+    }
+
+    async function goToDetatil(userId) {
+      console.log(userId);
+      let response = await $.ajax({
+        type: 'get',
+        url: `/user/read/${userId}`,
+      });
+
+      let data = { ...response.data }
+    
+
+      document.getElementById('userId').innerHTML = data.account;
+      document.getElementById('userName').innerHTML = data.name;
+      document.getElementById('userEmail').innerHTML = data.email;
+      document.getElementById('userPhone').innerHTML = data.phone;
+      document.getElementById('userCreated').innerHTML = data.created;
+      document.getElementById('userModified').innerHTML = data.modified;
+
+      modifyUserId = data.id;
+    }
+
+    async function getUserList() {
+      let response = await $.get("/user/read");
+      console.log(response);
+      
+      response.data.forEach(element => {
+        $('#userList').append(`
+          <div class="userDataDiv" onclick="goToDetatil(${element.id})">
+            <div>
+              <span>회원 ID:</span>
+              <span>${element.account}</span>
+            </div>
+            <div>
+              <span>회원 NAME:</span>
+              <span>${element.name}</span>
+            </div>
+            <div>
+              <span>회원 Email:</span>
+              <span>${element.email}</span>
+            </div>
+            <div>
+              <span>회원 Phone:</span>
+              <span>${element.phone}</span>
+            </div>
+            <div>
+              <span>회원 가입일:</span>
+              <span>${element.created}</span>
+            </div>
+            <div>
+              <span>회원 정보 수정일:</span>
+              <span>${element.modified}</span>
+            </div>
+          </div>
+        `);
+      });
+    }
+
+    async function modifyUser() {
+      let user = {
+          name: $('#user-name-modify').val(),
+          email: $('#user-email-modify').val(),
+          phone: $('#user-phone-modify').val(),
+          account: $('#user-id-modify').val(),
+          profilePath: 'test',
+        };
+        try {
+          let response = await $.ajax({
+          type: 'put',
+          url: `/user/update/${modifyUserId}`,
+          contentType: 'application/json',
+          data: JSON.stringify(user),
+          success: () => {
+            alert('수정 성공');
+          },
+        });
+        } catch (error) {
+          console.log(error);
+        }
+
+    }
+
+    getUserList();
+
+  </script>
 </html>

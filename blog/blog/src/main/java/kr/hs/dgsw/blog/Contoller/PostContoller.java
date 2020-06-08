@@ -14,12 +14,12 @@ import kr.hs.dgsw.blog.Protocol.ResponseFormat;
 import kr.hs.dgsw.blog.Protocol.ResponseType;
 import kr.hs.dgsw.blog.Service.PostService;
 
-@RestController
+@RestController //@RestController 는 @Controller 어노테이션과 @ResponseBody 어노테이션을 합쳐놓은 어노테이션이다.
 public class PostContoller {
-  @Autowired
+  @Autowired //@Autowired란 생성자나 세터 등을 사용하여 의존성 주입을 하려고 할 때, 해당 빈을 찾아서 주입해주는 annotation이다
   private PostService postService;
 
-  @PostMapping("/post/create")
+  @PostMapping("/post/create") // rest api Post
   public ResponseFormat create(@RequestBody Post post) {
     Post newPost = postService.create(post);
     if (newPost != null) {
@@ -33,7 +33,7 @@ public class PostContoller {
     }
   }
 
-  @PutMapping("/post/update/{id}")
+  @PutMapping("/post/update/{id}") // rest api put
   public ResponseFormat update(@PathVariable Long id, @RequestBody Post post) {
     if (postService.update(id, post) != null) {
       return new ResponseFormat(
@@ -47,7 +47,7 @@ public class PostContoller {
   }
 
 
-  @DeleteMapping("/post/delete/{id}")
+  @DeleteMapping("/post/delete/{id}") // rest api delete
   public ResponseFormat delete(@PathVariable Long id) {
     if (postService.delete(id)) {
       return new ResponseFormat(
@@ -60,7 +60,7 @@ public class PostContoller {
     }
   }
 
-  @GetMapping("/post/read/{id}")
+  @GetMapping("/post/read/{id}") // rest api get
   public ResponseFormat read(@PathVariable Long id) {
     if (postService.read(id) != null) {
       return new ResponseFormat(
@@ -73,7 +73,7 @@ public class PostContoller {
     }
   }
 
-  @GetMapping("/post/read/user/{userId}")
+  @GetMapping("/post/read/user/{userId}")// rest api get
   public ResponseFormat readByUserId(@PathVariable Long userId) {
     if (postService.readByUserId(userId) != null) {
       return new ResponseFormat(
@@ -86,7 +86,7 @@ public class PostContoller {
     }
   }
 
-  @GetMapping("/post/read/")
+  @GetMapping("/post/read") // rest api get
   public ResponseFormat readAll() {
     if (postService.readAll() != null) {
       return new ResponseFormat(
