@@ -1,0 +1,21 @@
+.registerUserTemplate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.userInfoDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 240px;
+  /* border: 1px solid black; */
+  margin-bottom: 20px;
+}
+
+.userInfoInput {
+  margin-left: 10px;
+}

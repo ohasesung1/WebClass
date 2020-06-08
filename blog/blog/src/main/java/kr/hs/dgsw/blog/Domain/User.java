@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import org.springframework.data.annotation.Id;
+
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,10 +17,10 @@ import org.slf4j.LoggerFactory;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import javax.persistence.Id;
 import java.security.NoSuchAlgorithmException;
 
 @Entity
@@ -39,9 +39,9 @@ public class User {
   public void setPaaword(String password) {
       try {
         MessageDigest md = MessageDigest.getInstance("SHA-512");
-        md.update(password.getBytes(), 0 password.getBytes().Length);
-        this.password = new BigInteger(1, md.digest().(16));
-      } catch (NoArgsConstructor e) {
+        md.update(password.getBytes(), 0, password.getBytes().length);
+        this.password = new BigInteger(1, md.digest()).toString(16);
+      } catch (NoSuchAlgorithmException e) {
         Logger logger = LoggerFactory.getLogger(User.class);
         logger.warn(e.getMessage());
       }
