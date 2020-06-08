@@ -7,7 +7,7 @@ import javax.persistence.Id;
 
 import lombok.Data;
 
-@Entity 
+@Entity // JPA에서 엔티티는 테이블에 대응하는 하나의 클래스 이다
 @Data // 람북 getter, setter 설정
 public class Attachment {
   @Id // 고유 id 설정 primary key

@@ -48,6 +48,22 @@
         <button onclick="updatePost()">수정</button>
       </div>
     </div>
+
+    <div id="userList">
+      <h2>사용자별 게시글 조회</h2>
+    </div>
+
+    <div class="postOneTemplate">
+      <h2>게시글 조회</h2>
+      <div>
+        <span>제목:</span>
+        <span id="title-user"></span>
+      </div>
+      <div>
+        <span>내용:</span>
+        <span id="content-user"></span>
+      </div>
+    </div>
   </body>
 
   <script>
@@ -134,6 +150,57 @@
       updatePostIdx = postIdx;
     }
 
+    async function getPostByUser(userIdx) {
+      let response = await $.ajax({
+        type: 'get',
+        url: `/post/read/user/${userIdx}`,
+        contentType: 'application/json',
+      });
+
+      let data = {
+        ...response.data,
+      };
+
+      document.getElementById('title-user').innerHTML = data.title;
+      document.getElementById('content-user').innerHTML = data.content;
+    };
+
+    async function readUserList(params) {
+      let response = await $.get("/user/read");
+
+      response.data.forEach(element => {
+        $('#userList').append(`
+          <div class="userDataDiv" onclick="getPostByUser(${element.id})">
+            <div>
+              <span>회원 ID:</span>
+              <span>${element.account}</span>
+            </div>
+            <div>
+              <span>회원 NAME:</span>
+              <span>${element.name}</span>
+            </div>
+            <div>
+              <span>회원 Email:</span>
+              <span>${element.email}</span>
+            </div>
+            <div>
+              <span>회원 Phone:</span>
+              <span>${element.phone}</span>
+            </div>
+            <div>
+              <span>회원 가입일:</span>
+              <span>${element.created}</span>
+            </div>
+            <div>
+              <span>회원 정보 수정일:</span>
+              <span>${element.modified}</span>
+            </div>
+          </div>
+        `);
+      });
+    };
+
+    readUserList();
     getPostList();
   </script>
 </html>

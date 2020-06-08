@@ -32,6 +32,12 @@ GET http://localhost:8080/post/read/4
 Accept: application/json
 
 ###
+GET http://localhost:8080/post/read/user/1
+Accept: application/json
+
+###
+
+###
 GET http://localhost:8080/post/read
 Accept: application/json
 

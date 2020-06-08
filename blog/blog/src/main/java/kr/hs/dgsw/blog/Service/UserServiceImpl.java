@@ -11,7 +11,7 @@ import kr.hs.dgsw.blog.Repository.UserRepository;
 @Service // Service의 역할은 Dao가 DB에서 받아온 데이터를 전달받아 가공하는 것
 public class UserServiceImpl implements UserService {
   
-  @Autowired
+  @Autowired //의존하고 있는 Bean을 자동으로 주입해 주는 것
   private UserRepository userRepository;
 
   @Override
