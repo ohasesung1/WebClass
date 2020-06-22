@@ -12,5 +12,6 @@ public interface UserMapper {
   Long add(User user);
   int modity(User user);
   User findById(@Param("id") Long id);
-  Long login(User user);
+  User findByAccount(String account);
+  User login(User user);
 }
