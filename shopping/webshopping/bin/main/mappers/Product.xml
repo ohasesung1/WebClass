@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dgsw.hs.kr.webshopping.Domain.ProductMapper">
+  <insert id="add" parameterType="dgsw.hs.kr.webshopping.Product">
+    insert into product(name, price, menuId, subMenuId, details, factory)
+      values(#{name}, #{price}, #{menuId}, #{subMenuId}, #{details}, #{factory})
+  </insert>
+
+  <update id="modify" parameterType="dgsw.hs.kr.webshopping.Product">
+    update product
+    set name=#{name}, price=#{price}, menuId=#{menuId}, subMenuId=#{subMenuId}
+    details=#{details} factory={factory}
+    where id=#{id}
+  </update>
+
+  <delete id="deleteById" parameterType="Long">
+    delete from product where id=#{id}
+  </delete>
+
+  <select id="findById" parameterType="Long" resultType="dgsw.hs.kr.webshopping.Product">
+    select name, price, menuId, subMenuId, details, factory
+    from product
+    where id=#{id}
+  </select>
+
+  <select id="findByMenuId" parameterType="Long" resultType="dgsw.hs.kr.webshopping.Product">
+    select name, price, menuId, subMenuId, details, factory
+    from product
+    where menuId=#{menuId}
+  </select>
+
+  <select id="findBySubMenuId" parameterType="Long" resultType="dgsw.hs.kr.webshopping.Product">
+    select name, price, menuId, subMenuId, details, factory
+    from product
+    where subMenuId=#{subMenuId}
+  </select>
+
+  <select id="findAll" resultType="dgsw.hs.kr.webshopping.Product">
+    select name, price, menuId, subMenuId, details, factory
+    from product
+  </select>
+</mapper>

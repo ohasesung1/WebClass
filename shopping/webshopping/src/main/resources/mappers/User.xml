@@ -5,6 +5,7 @@
   <insert id="add" parameterType="dgsw.hs.kr.webshopping.Domain.User">
     insert into user(account, password, username, tel, phone, zipcode, address, email)
     values(#{account}, #{password}, #{username}, #{tel}, #{phone}, #{zipcode}, #{address}, #{email})
+    <selectKey keyProperty
   </insert>
 
   <update id="modity" parameterType="dgsw.hs.kr.webshopping.Domain.User">

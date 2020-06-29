@@ -21,5 +21,4 @@
     select productId, userName, contentfrom revie
     where productId=#{productById}
   </update>
-  
 </mapper>sel
